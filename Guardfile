@@ -88,7 +88,8 @@ guard :rspec, all_after_pass: false, cli: '--drb', cmd: "bundle exec rspec" do
   end
 end
 
-guard :spork, :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
+# guard :spork, :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false do
+guard :spork, cucumber: false, :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch('config/environments/test.rb')

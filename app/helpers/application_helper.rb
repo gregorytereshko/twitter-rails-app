@@ -8,9 +8,4 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
-
-  def alert_class type
-    type = 'danger' if type == 'error'
-    "alert alert-#{type}"
-  end
 end
