@@ -63,19 +63,52 @@ RSpec.describe "AutenticationPages", type: :request do
             fill_in "Email",    with: user.email
             fill_in "Password", with: user.password
             click_button "Sign in"
+            sign_in user, no_capybara: true
           end
 
           describe 'after signing in' do
             it 'should render the desired protected page' do
               expect(page).to have_title('Edit user')
             end
+
+            describe 'after sign out and sign in' do
+              before do
+                delete signout_path
+                sign_in(user)
+              end
+              
+              it 'should render a default profile page' do
+                expect(page).to have_title(full_title(user.name))
+              end
+            end
           end
+
+
 
         end
 
         describe 'visiting the user index' do
           before { visit users_path }
           it { should have_title('Sign in') }
+        end
+
+        describe 'links in header' do
+          before { visit root_path }
+
+          it { should_not have_link('Profile') }
+          it { should_not have_link('Settings') }
+        end
+
+      end
+
+      describe 'in the Microposts controller' do
+        describe 'submitting to the create action' do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { expect(response).to redirect_to(signin_path) }
         end
 
       end
@@ -101,16 +134,37 @@ RSpec.describe "AutenticationPages", type: :request do
       let(:user) { FactoryGirl.create(:user) }
       let(:non_admin) { FactoryGirl.create(:user) }
       
-      before { sign_in non_admin }
+      before { sign_in non_admin, no_capybara: true }
 
       describe 'submitting a DELETE request to the Users#destroy action' do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_url) }
       end
-
-      
     end
-    
+
+    describe 'as true user' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      describe 'visiting Users#new page' do
+        before do
+          sign_in(user)
+          visit new_user_path
+        end
+        it { should have_title(full_title('')) }
+      end
+
+      describe 'submitting a POST request to the Users#create action' do
+        before do
+          sign_in user, no_capybara: true
+          post users_path(user)
+        end
+        specify { expect(response).to redirect_to(root_url) }
+      end
+
+
+    end
+
+
   end
 
 end
