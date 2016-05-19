@@ -32,6 +32,30 @@ describe "Static pages" do
         end
       end
 
+      describe 'number of posts in sidebar' do
+        it { should have_content("2 microposts") }
+        describe 'for one post' do
+          before do
+            click_link('delete', match: :first)
+            visit root_path
+          end
+          it { should have_content("1 micropost") }
+        end
+      end
+
+      describe 'follower/following counts' do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link('0 following', href: following_user_path(user)) }
+        it { should have_link('1 followers', href: followers_user_path(user)) }
+
+
+      end
+
 
     end
   end
