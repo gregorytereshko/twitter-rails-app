@@ -1,3 +1,3 @@
 # Первое приложение Rails
 # Аналог Twitter
-https://travis-ci.org/gregorytereshko/twitter-rails-app.svg?branch=master
+[![Build Status](https://travis-ci.org/gregorytereshko/twitter-rails-app.svg?branch=master)](https://travis-ci.org/gregorytereshko/twitter-rails-app)
