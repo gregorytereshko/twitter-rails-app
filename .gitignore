@@ -19,8 +19,6 @@
 ##Ignore secrets
 #/config/secrets.yml
 
-#Ignore DB
-/config/database.yml
 
 #Ignore IDE files
 /.idea
