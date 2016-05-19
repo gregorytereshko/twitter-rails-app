@@ -22,12 +22,11 @@
 
 production:
   adapter: postgresql
-  host: ec2-54-243-212-122.compute-1.amazonaws.com
   encoding: unicode
-  database: d2n9daf490gc75
-  username: wbhcxmlxhqqlai
-  password: z5g4mfunT5lXuTziL3MRIhzapt
-  port: 5432
+  database: myapp_production
+  pool: 5
+  username: gregory
+  password: 123
 
 development:
   adapter: postgresql
