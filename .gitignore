@@ -20,7 +20,7 @@
 #/config/secrets.yml
 
 ##Ignore db
-/config/database.yml
+#/config/database.yml
 
 #Ignore IDE files
 /.idea
